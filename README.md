@@ -5,3 +5,4 @@ Powershell script that can be used to add trailers to your movie collection.  It
 ### Requirements
 - A movie library with naming convention starting with {Movie Title} ({Release Year}), example: Ghostbusters - (1984).
 - Windows Powershell
+- YT-DLP
