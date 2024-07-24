@@ -1,12 +1,12 @@
 # trailers.ps1
-Powershell script that can be used to add trailers to your movie collection.  It can be used stand alone or triggered by Radarr.
+  Powershell script that can be used to add trailers to your movie collection.  It can be used stand alone or triggered by Radarr.
 
-This came about because I wanted trailers that my Roku will recognize and play through my Jellyfin client.  So I smashed some shit together that worked for me and this is the end result.
+  This came about because I wanted trailers that my Roku will recognize and play through my Jellyfin client.  So I smashed some shit together that worked for me and this is the end result.
 
 ----------
 
 ### Requirements
-- YT-DLP
+- YT-DLP (included)
 - Powershell
 - A movie library with the naming convention {Movie Title} ({Release Year}), example: Ghostbusters - (1984).
 
