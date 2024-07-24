@@ -18,7 +18,7 @@ If you want to connect it to Radarr make sure it is in a directory that is visib
 This is good to do for the first use.
 - Open a PowerShell window.
 - Navigate to the installation folder.
-- Launch .\trailers.ps1 PATH_TO_MY_LIBRARY_ROOT_FOLDER (ex: z:\movies).
+- Launch .\trailers.ps1 PATH_TO_MY_LIBRARY_ROOT_FOLDER (ex: .\trailers.ps1 z:\movies).
 - Wait for the script to finish.
 
 The first run will take a little bit of time depending on the size of your collection.
