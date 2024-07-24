@@ -23,4 +23,12 @@ The first run will take a little bit of time depending on the size of your colle
 You can monitor download progress in the Powershell window or in the most recent log file stored under \logs.
 
 ### Connect with Radarr
-In Radarr, create a new Custom Script connection (Settings > Connect > + > Custom Script) that triggers on Import and on Rename. Set the path to your copy of trailers.ps1.  Test the connection, if all is good, enjoy.
+- Open Radarr
+- Create a new Connection
+  - Settings > Connect > + > Custom Script
+- Set the Notification Triggers to 'On Import' and 'On Rename'.
+- Set the path to your copy of trailers.ps1.
+- Test the Connection.
+- Save the Connection.
+
+### Customize
