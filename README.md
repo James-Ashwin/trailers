@@ -2,6 +2,7 @@
 Powershell script that can be used to add trailers to your movie collection.  It can be used stand alone or triggered by Radarr.
 
 ### Requirements
+- YT-DLP
 - Powershell
 - A movie library with naming convention starting with {Movie Title} ({Release Year}), example: Ghostbusters - (1984).
 
