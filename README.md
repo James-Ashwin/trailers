@@ -27,10 +27,12 @@ You can monitor download progress in the Powershell window or in the most recent
 ### Connect with Radarr
 - Open Radarr
 - Create a new Connection
-  - Settings > Connect > + > Custom Script
+  - Go to 'Settings', 'Connect', '+' and select 'Custom Script'.
 - Set the Notification Triggers to 'On Import' and 'On Rename'.
 - Set the path to your copy of trailers.ps1.
 - Test the Connection.
 - Save the Connection.
 
-### Customize
+### Turn off Logs
+On Line 1 change "$LogActivity = $true"
+to "$LogActivity = $false".
