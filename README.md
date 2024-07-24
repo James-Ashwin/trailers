@@ -25,6 +25,7 @@ The first run will take a little bit of time depending on the size of your colle
 You can monitor download progress in the Powershell window or in the most recent log file stored under \logs.
 
 ### Connect with Radarr
+This is the recommended usage.
 - Open Radarr
 - Create a new Connection
   - Go to 'Settings', 'Connect', '+' and select 'Custom Script'.
