@@ -8,7 +8,7 @@ This came about because I wanted trailers that my Roku will recognize and play t
 ### Requirements
 - YT-DLP
 - Powershell
-- A movie library with naming convention starting with {Movie Title} ({Release Year}), example: Ghostbusters - (1984).
+- A movie library with the naming convention {Movie Title} ({Release Year}), example: Ghostbusters - (1984).
 
 ----------
 
