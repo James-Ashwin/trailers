@@ -1,6 +1,6 @@
 $LogActivity = $true
 $TestModeRadarr = $false
-$TmdbApiKEy = "5fd91d77bbb187d554b949e96706c81e";
+$TmdbApiKEy = "c547771cec63e614e796c428285efe48";
 $YoutubeApiKey = "AIzaSyAVm2mu31T9rbB0KA94Rx08vEfty91kX48"
 $YoutubeParams = @{default=[pscustomobject]@{UseOriginalMovieName=$false; SearchKeywords='Official Trailer'}}
 
