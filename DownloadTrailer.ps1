@@ -1,32 +1,13 @@
-﻿############################# CONFIG #############################
-
-# Whether to log everything the script does
-$LogActivity = $false
-
-# Use fake environment variables to test the script as if it was called from Radarr
+$LogActivity = $true
 $TestModeRadarr = $false
-
-# Your TMDB API key, if not provided, language-dependant features won't be activated
 $TmdbApiKEy = "5fd91d77bbb187d554b949e96706c81e";
-
-# Youtube API key (see https://developers.google.com/youtube/v3/getting-started)
-$YoutubeApiKey = "AIzaSyDhJdviuovc9IWf0rdbIvHZ5jo-Ef9Ex7I"
-
-# Language-dependant parameters to search for trailers on Youtube
+$YoutubeApiKey = "AIzaSyAVm2mu31T9rbB0KA94Rx08vEfty91kX48"
 $YoutubeParams = @{default=[pscustomobject]@{UseOriginalMovieName=$false; SearchKeywords='Official Trailer'}}
-
-
-############################# IMPORTS #############################
 
 Add-Type -AssemblyName System.Web
 
-
-############################# LOG #############################
-
-# Set current directory to script location :
 $MyInvocation.MyCommand.Path | Split-Path | Push-Location
 
-# Create a new log file
 $LogFolderName = "Logs"
 if($LogActivity -and -not(Test-Path $LogFolderName)) {
     New-Item $LogFolderName -ItemType Directory
@@ -34,7 +15,6 @@ if($LogActivity -and -not(Test-Path $LogFolderName)) {
 $LogFileName = Get-Date -Format FileDateTime
 $LogFileName = "$LogFolderName/$LogFileName.txt"
 
-# Echoes the given text and appends the given text to the log file's content
 function Log {
     param ($LogText)
 
@@ -44,7 +24,6 @@ function Log {
     }
 }
 
-#
 function LogInFunction {
     param($LogText)
 
@@ -54,7 +33,6 @@ function LogInFunction {
     }
 }
 
-############################# CURL / JSON #############################
 function fetchJSON {
     param($url)
 
@@ -72,10 +50,6 @@ function fetchJSON {
     return $response
 }
 
-
-############################# YOUTUBE #############################
-
-# Searches for trailer on Youtube and downloads the video to the desired destination
 function Get-YoutubeTrailer {
     param (
         $movieTitle, 
@@ -86,7 +60,6 @@ function Get-YoutubeTrailer {
 
     $trailerFilename = "$moviePath\$movieTitle ($movieYear)-Trailer.%(ext)s"
 
-    # Gather data from TMDB
     $keywords = $YoutubeParams.default.SearchKeywords;
     if($TmdbApiKEy -ne 'YOUR_API_KEY' -and $tmdbId -ne '') {
         $tmdbURL = "https://api.themoviedb.org/3/movie/$($tmdbId)?api_key=$TmdbApiKEy"
@@ -102,7 +75,6 @@ function Get-YoutubeTrailer {
         }
     }
 
-    # Search for trailer on Youtube
     $ytQuery = "$movieTitle $movieYear $keywords"
     $ytQuery = [System.Web.HTTPUtility]::UrlEncode($ytQuery)
 
@@ -111,31 +83,23 @@ function Get-YoutubeTrailer {
     $ytSearchResults =  fetchJSON($ytSearchUrl)
     $ytVideoId = $ytSearchResults.items[0].id.videoId
 
-    # Donwload trailer
     LogInFunction "Downloading video ..."
     & .\yt-dlp.exe -o $trailerFilename https://www.youtube.com/watch?v=$ytVideoId | Out-File -FilePath $LogFileName -Append
     LogInFunction "Trailer successfully downloaded and saved to $trailerFilename"
 }
 
-
-############################# TEST MODE #############################
-
 if($TestModeRadarr) {
     Log "Setting TEST MODE environment"
     $Env:radarr_eventtype = "Download"
     $Env:radarr_isupgrade = "False"
-    $Env:radarr_movie_path = "D:\PlexLibrary\Films\Bye Bye Morons (2020)"
+    $Env:radarr_movie_path = "C:\Jellyfin\Movies\Bye Bye Morons (2020)"
     $Env:radarr_movie_title = "Bye Bye Morons"
     $Env:radarr_movie_year = "2020"
     $Env:radarr_movie_tmdbid = "651881"
 }
 
-
-############################# SCRIPT #############################
-
 cls
 
-# Calling script from Radarr
 if(Test-Path Env:radarr_eventtype) {
     Log "Script triggered from Radarr"
 
@@ -154,20 +118,17 @@ if(Test-Path Env:radarr_eventtype) {
     exit 0
 }
 
-# Calling script from command line 
 if($args.Count -eq 0) {
     echo "Usage : .\DownloadTrailer.ps1 movies_library_root_folder"
     exit 0
 }
 
-# Checking root folder
 $libraryRoot = $args[0]
 if(-not(Test-Path $libraryRoot)) {
     Log "The root folder doesn't exist"
     exit 1
 }
 
-# Downloading trailers
 $downloadedTrailersCount = 0
 Get-ChildItem -Path $libraryRoot -Directory |
 ForEach-Object {
@@ -185,13 +146,11 @@ ForEach-Object {
     else {
         Log "Downloading a trailer for ""$($_.Name)"" ..."
         
-        # Extracting movie title and year from the filename
         $videoFile = Get-ChildItem -LiteralPath "$($_.FullName)" -File | Sort-Object Length -Descending | Select-Object BaseName -First 1
         if($videoFile.BaseName -match "(.*) \((\d{4})\)") {
             $title = $Matches.1
             $year = $Matches.2
             
-            # Get TMDB Id
             $tmdbId = '';
             if($TmdbApiKEy -ne 'YOUR_API_KEY') {
                 $tmdbSearchURL = "https://api.themoviedb.org/3/search/movie?api_key=$TmdbApiKEy&query=$([System.Web.HTTPUtility]::UrlEncode($title))&year=$year"
