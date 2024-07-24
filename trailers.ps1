@@ -86,6 +86,8 @@ function Get-YoutubeTrailer {
     LogInFunction "Downloading video ..."
     & .\yt-dlp.exe -o $trailerFilename https://www.youtube.com/watch?v=$ytVideoId | Out-File -FilePath $LogFileName -Append
     LogInFunction "Trailer successfully downloaded and saved to $trailerFilename"
+    LogInFunction "Pausing for 30 seconds to avoid being flagged by YouTube."
+    Timeout /T 30
 }
 
 if($TestModeRadarr) {
@@ -119,7 +121,8 @@ if(Test-Path Env:radarr_eventtype) {
 }
 
 if($args.Count -eq 0) {
-    echo "Usage : .\DownloadTrailer.ps1 movies_library_root_folder"
+    echo "Usage : .\trailers.ps1 movies_library_root_folder"
+    echo "Example: .\trailers.ps1 Z:\movies"
     exit 0
 }
 
@@ -170,4 +173,4 @@ ForEach-Object {
         }
     }
 }
-Log "Succesfully downloaded $downloadedTrailersCount new trailers."
+Log "You succesfully downloaded $downloadedTrailersCount new trailers."
