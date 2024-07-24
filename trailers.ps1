@@ -86,18 +86,18 @@ function Get-YoutubeTrailer {
     LogInFunction "Downloading video ..."
     & .\yt-dlp.exe -o $trailerFilename https://www.youtube.com/watch?v=$ytVideoId | Out-File -FilePath $LogFileName -Append
     LogInFunction "Trailer successfully downloaded and saved to $trailerFilename"
-    LogInFunction "Pausing for 30 seconds to avoid being flagged by YouTube."
-    Timeout /T 30
+    LogInFunction "Pausing for 15 seconds to avoid being flagged by YouTube."
+    Timeout /T 15
 }
 
 if($TestModeRadarr) {
     Log "Setting TEST MODE environment"
     $Env:radarr_eventtype = "Download"
     $Env:radarr_isupgrade = "False"
-    $Env:radarr_movie_path = "C:\Jellyfin\Movies\Bye Bye Morons (2020)"
-    $Env:radarr_movie_title = "Bye Bye Morons"
-    $Env:radarr_movie_year = "2020"
-    $Env:radarr_movie_tmdbid = "651881"
+    $Env:radarr_movie_path = "Z:\Movies\Ghostbusters (1984)"
+    $Env:radarr_movie_title = "Ghostbusters"
+    $Env:radarr_movie_year = "1984"
+    $Env:radarr_movie_tmdbid = "620"
 }
 
 cls
