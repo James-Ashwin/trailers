@@ -5,12 +5,13 @@
   So I smashed some shit together that worked for me and this is the end result.
 
 ### Requirements
+- FFMPEG (included)
 - YT-DLP (included)
 - Powershell
 - A movie library with the naming convention {Movie Title} ({Release Year}), example: Ghostbusters - (1984).
 
 ### Installation
-- Download and extract in a directory of your choice.
+- Download and extract in a directory of your choice.  Unless you edit the script it requires FFMPEG and YT-DLP to be in the same folder as the script.
 
 If you want to connect it to Radarr make sure it is in a directory that is visible to your Radarr installation.
 
